@@ -48,4 +48,7 @@ def build_panel_state(root: Path, user_text: str, sapiens_id: str) -> dict[str, 
     root = resolve_sot_root(root)
     _ensure_import_path(root)
     from ciel_sot_agent.sapiens_panel.controller import build_panel_state as _impl
-    return _impl(root, user_text=user_text, sapiens_id=sapiens_id)
+    from ciel_sot_agent.sapiens_panel.render_schema import to_render_dict
+
+    state = _impl(root, user_text=user_text, sapiens_id=sapiens_id)
+    return to_render_dict(state)
