@@ -3,7 +3,20 @@ from __future__ import annotations
 import sys
 import types
 
+from ciel_desktop.core import sot_adapter
 from ciel_desktop.core.sot_adapter import build_panel_state
+
+
+def test_resolve_sot_root_prefers_current_repository_name(monkeypatch, tmp_path) -> None:
+    desktop_root = tmp_path / "CIEL-Desktop"
+    desktop_root.mkdir()
+    current_sot_root = tmp_path / "CIEL-Omega-ApokalypOS"
+    current_sot_root.mkdir()
+
+    monkeypatch.delenv("CIEL_SOT_AGENT_ROOT", raising=False)
+    monkeypatch.setattr(sot_adapter, "ROOT_DIR", desktop_root)
+
+    assert sot_adapter.resolve_sot_root() == current_sot_root.resolve()
 
 
 def test_build_panel_state_returns_render_dict(monkeypatch, tmp_path) -> None:
