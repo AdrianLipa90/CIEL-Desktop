@@ -14,11 +14,13 @@ def resolve_sot_root(explicit_root: str | Path | None = None) -> Path:
     env_root = os.getenv(SOT_AGENT_ENV)
     if env_root:
         return Path(env_root).resolve()
-    candidate = ROOT_DIR.parent / "CIEL-_SOT_Agent"
-    if candidate.exists():
-        return candidate.resolve()
+    for repository_name in ("CIEL-Omega-ApokalypOS", "CIEL-_SOT_Agent"):
+        candidate = ROOT_DIR.parent / repository_name
+        if candidate.exists():
+            return candidate.resolve()
     raise RuntimeError(
-        "CIEL SOT Agent root not found. Set CIEL_SOT_AGENT_ROOT to a local checkout of AdrianLipa90/CIEL-_SOT_Agent."
+        "CIEL SOT Agent root not found. Set CIEL_SOT_AGENT_ROOT to a local checkout of "
+        "AdrianLipa90/CIEL-Omega-ApokalypOS."
     )
 
 
